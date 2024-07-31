@@ -14,10 +14,15 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { login } from '../../services/login';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../auth.context';
+import { useNavigate } from 'react-router-dom';
 
 export const LogInPage = () => {
     const [isError, setIsError] = useState(false);
+    const { setAuthState } = useContext(AuthContext);
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -28,9 +33,11 @@ export const LogInPage = () => {
         );
         if (result) {
             setIsError(false);
-            console.log('Login success');
+            setAuthState({ isAuthenticated: true });
+            navigate('/');
         } else {
             setIsError(true);
+            setAuthState({ isAuthenticated: false });
             console.log('Login failed');
         }
     };
