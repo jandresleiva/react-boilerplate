@@ -32,8 +32,7 @@ export const LogInPage = () => {
         sm={4}
         md={7}
         sx={{
-          backgroundImage:
-            'url("/static/images/templates/templates-images/sign-in-side-bg.png")',
+          backgroundImage: 'url("https://picsum.photos/1920/1280")',
           backgroundColor: (t) =>
             t.palette.mode === "light"
               ? t.palette.grey[50]
