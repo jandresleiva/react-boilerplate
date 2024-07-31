@@ -1,12 +1,15 @@
 import { LogInPage, Main } from './pages';
+import { Navigate } from 'react-router-dom';
+
+const loggedIn = false;
 
 export const routesConfig = [
     {
         path: '/',
-        element: <LogInPage />
+        element: loggedIn ? <Main /> : <Navigate to="/login" />
     },
     {
-        path: '/Main',
-        element: <Main />
+        path: '/login',
+        element: <LogInPage />
     }
 ];
