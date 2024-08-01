@@ -1,30 +1,31 @@
 import { ThemeProvider } from '@mui/material/styles';
 import { darkTheme, lightTheme } from './themes';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { AuthContext } from './auth.context';
-import { useState } from 'react';
+import { AuthProvider } from './contexts/AuthContext/AuthProvider';
 import { routesConfig } from './routes';
 
 function App() {
     const getCurrentTheme = () =>
         window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    const [authState, setAuthState] = useState({
-        isAuthenticated: false
-    });
-
-    const router = createBrowserRouter(routesConfig(authState));
     return (
         <>
-            <AuthContext.Provider value={{ authState, setAuthState }}>
+            <AuthProvider>
                 <ThemeProvider
                     theme={getCurrentTheme() ? darkTheme : lightTheme}
                 >
-                    <RouterProvider router={router} />
+                    <AuthBasedRouter />
                 </ThemeProvider>
-            </AuthContext.Provider>
+            </AuthProvider>
         </>
     );
 }
+
+const AuthBasedRouter = () => {
+    // Create router with up-to-date auth state
+    const router = createBrowserRouter(routesConfig());
+
+    return <RouterProvider router={router} />;
+};
 
 export default App;

@@ -1,11 +1,14 @@
-import { AuthContextState } from './auth.context';
 import { LogInPage, Main } from './pages';
-import { Navigate } from 'react-router-dom';
+import ProtectedRoutes from './ProtectedRoutes';
 
-export const routesConfig = (auth: AuthContextState) => [
+export const routesConfig = () => [
     {
         path: '/',
-        element: auth.isAuthenticated ? <Main /> : <Navigate to="/login" />
+        element: (
+            <ProtectedRoutes>
+                <Main />
+            </ProtectedRoutes>
+        )
     },
     {
         path: '/login',

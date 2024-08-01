@@ -13,31 +13,31 @@ import {
     Typography
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { login } from '../../services/login';
-import { useContext, useState } from 'react';
-import { AuthContext } from '../../auth.context';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useAuth from '../../contexts/AuthContext/useAuth';
 
 export const LogInPage = () => {
     const [isError, setIsError] = useState(false);
-    const { setAuthState } = useContext(AuthContext);
+    const { authState, login } = useAuth();
 
     const navigate = useNavigate();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setIsError(false);
+        //TODO: Add loading
         const data = new FormData(event.currentTarget);
-        const result = await login(
+        const loginResult = await login(
             data.get('email') as string,
             data.get('password') as string
         );
-        if (result) {
-            setIsError(false);
-            setAuthState({ isAuthenticated: true });
+
+        console.log(loginResult);
+        if (authState.isAuthenticated || loginResult) {
             navigate('/');
         } else {
             setIsError(true);
-            setAuthState({ isAuthenticated: false });
             console.log('Login failed');
         }
     };
