@@ -1,30 +1,133 @@
-# React + TypeScript + Vite
+# Project Name
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A minimalistic React front-end application with basic routing and authentication
+context setup.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   [Project Description](#project-description)
+-   [Installation](#installation)
+-   [Usage](#usage)
+-   [Project Structure](#project-structure)
+-   [Adding Routes](#adding-routes)
+-   [Contributing](#contributing)
+-   [License](#license)
 
-## Expanding the ESLint configuration
+## Project Description
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+This project is a minimalistic front-end application built using React. It
+includes basic setup for theming, routing with `react-router-dom`, and state
+management for authentication through a context provider.
 
-- Configure the top-level `parserOptions` property like this:
+## Installation
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+To get started with the project, clone the repository and install the necessary
+dependencies:
+
+```bash
+git clone <repository-url>
+cd front-end-project
+pnpm install
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Ensure you have `pnpm` installed globally. If not, you can install it using
+`npm`:
+
+```bash
+npm install -g pnpm
+```
+
+## Usage
+
+To start the development server, run:
+
+```bash
+pnpm run dev
+```
+
+This will start the application and open it in your default web browser. The
+application will automatically reload if you change any of the source files.
+
+## Project Structure
+
+The project's structure is as follows:
+
+```
+front-end-project/
+│
+├── public/               # Static assets
+│   └── index.html        # Main HTML file
+│
+├── src/                  # Source files
+│   ├── assets/           # Images, icons, etc.
+│   ├── components/       # React components
+│   ├── pages/            # Page components
+│   ├── auth.context.ts   # Authentication context
+│   ├── routes.tsx        # Application routes
+│   ├── App.tsx           # Main App component
+│   └── main.tsx          # Entry point
+│
+├── .eslintrc.cjs         # ESLint configuration
+├── .gitignore            # Git ignore rules
+├── .prettierrc           # Prettier configuration
+├── package.json          # Project metadata and dependencies
+├── pnpm-lock.yaml        # Lockfile for pnpm dependencies
+├── tsconfig.json         # TypeScript configuration
+└── vite.config.ts        # Vite configuration
+```
+
+## Adding Routes
+
+To add a new route to the application, follow these steps:
+
+1. **Create a New Page Component:** Create a new component in the `src/pages`
+   directory that you want to display for the new route.
+
+    ```tsx
+    // src/pages/NewPage.tsx
+    import React from 'react';
+
+    const NewPage = () => {
+        return <div>New Page Content</div>;
+    };
+
+    export default NewPage;
+    ```
+
+2. **Update the Routes Configuration:** Add the new route in the `routes.tsx`
+   file by including the path and the corresponding component.
+
+    ```tsx
+    // src/routes.tsx
+    import { AuthContextState } from './auth.context';
+    import { LogInPage, Main, NewPage } from './pages';
+    import { Navigate } from 'react-router-dom';
+
+    export const routesConfig = (auth: AuthContextState) => [
+        {
+            path: '/',
+            element: auth.isAuthenticated ? <Main /> : <Navigate to="/login" />
+        },
+        {
+            path: '/login',
+            element: <LogInPage />
+        },
+        {
+            path: '/new-page',
+            element: <NewPage /> // Adding the new page route
+        }
+    ];
+    ```
+
+3. **Test the Route:** Start the development server and navigate to the new
+   route (e.g., `/new-page`) to ensure it loads correctly.
+
+## Contributing
+
+Contributions are welcome! Please follow the standard
+[GitHub flow](https://guides.github.com/introduction/flow/) for contributing.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file
+for more information.
