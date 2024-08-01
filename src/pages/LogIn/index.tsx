@@ -51,7 +51,7 @@ export const LogInPage = () => {
                 sm={4}
                 md={7}
                 sx={{
-                    backgroundImage: 'url("https://picsum.photos/1920/1280")',
+                    backgroundImage: 'url("https://picsum.photos/1280/768")',
                     backgroundColor: (t) =>
                         t.palette.mode === 'light'
                             ? t.palette.grey[50]
