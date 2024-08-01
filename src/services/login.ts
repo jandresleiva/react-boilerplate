@@ -13,7 +13,7 @@ export const login = async (
                     console.log('service test false');
                     resolve(false);
                 }
-            }, 5000);
+            }, 1000);
         } catch (error) {
             reject(error);
         }
